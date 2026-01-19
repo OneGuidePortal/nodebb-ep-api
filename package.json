@@ -1,0 +1,20 @@
+{
+  "name": "nodebb-ep-api",
+  "version": "1.0.0",
+  "description": "A comprehensive example demonstrating how to integrate with the managed Elasticsearch service [ElasticPress.io](https://elasticpress.io) outside of WordPress using the Nobel Prize dataset.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OneGuidePortal/nodebb-ep-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OneGuidePortal/nodebb-ep-api/issues"
+  },
+  "homepage": "https://github.com/OneGuidePortal/nodebb-ep-api#readme"
+}
