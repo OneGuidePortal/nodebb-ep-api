@@ -5,9 +5,14 @@
     "url": "https://github.com/OneGuidePortal/nodebb-ep-api",
     "library": "./library.js",
     "hooks": [
-        { "hook": "static:app.load", "method": "init" }
+        { "hook": "static:app.load", "method": "init" },
+        { "hook": "filter:admin.header.build", "method": "addAdminNavigation" }
     ],
     "staticDirs": {
         "static": "./public"
+    },
+    "templates": "./public/templates",
+    "modules": {
+        "../admin/plugins/ep-api.js": "public/admin.js"
     }
 }

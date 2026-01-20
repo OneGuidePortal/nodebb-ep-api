@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "nbbpm": {
-    "compatibility": "^3.0.0"
+    "compatibility": "^4.0.0"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.17.0",
