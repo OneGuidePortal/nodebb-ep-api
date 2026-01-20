@@ -28,6 +28,23 @@ define(['settings', 'alerts', 'bootbox'], function (settings, alerts, bootbox) {
 				}
 			});
 		});
+
+		$('#run-reindex').on('click', function () {
+			bootbox.confirm({
+				title: 'Reindex All Content',
+				message: 'This will index all topics and posts to Elasticsearch. This may take a while depending on the amount of content. Continue?',
+				callback: function (result) {
+					if (result) {
+						socket.emit('admin.plugins.epApi.reindex', {}, function (err, data) {
+							if (err) {
+								return alerts.error(err.message);
+							}
+							alerts.success(data.message);
+						});
+					}
+				}
+			});
+		});
 	};
 
 	return ACP;

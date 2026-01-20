@@ -36,7 +36,8 @@
 
 					<div class="mb-3">
 						<button type="button" id="run-setup" class="btn btn-warning">Run Setup (Create Index)</button>
-						<p class="form-text">This will delete and recreate the <code>laureates</code> index on ElasticPress.io using the settings above.</p>
+						<button type="button" id="run-reindex" class="btn btn-primary">Reindex All Content</button>
+						<p class="form-text">"Run Setup" will delete and recreate the index. "Reindex All" will push all current topics and posts to the index.</p>
 					</div>
 				</div>
 			</form>

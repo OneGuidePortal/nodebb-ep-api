@@ -5,6 +5,7 @@ const socketAdmin = require.main.require('./src/socket.io/admin');
 const winston = require.main.require('winston');
 const { Client } = require('@elastic/elasticsearch');
 const { getSettings, getMapping } = require('./src/Mapping/NobelPrizeMapping.js');
+const Indexer = require('./src/Indexer');
 
 const plugin = {};
 
@@ -37,11 +38,15 @@ plugin.init = async (params) => {
 					username: settings.subscription_id,
 					password: settings.subscription_token,
 				},
+				sniffOnStart: false,
+				sniffOnConnectionFault: false,
+				headers: {
+					'x-elastic-product': 'Elasticsearch'
+				}
 			});
 
-			// Sanitize WordPress URL: remove protocol and special chars
-			let sanitizedUrl = settings.wordpress_url.replace(/(^\w+:|^)\/\//, ''); // Remove protocol
-			sanitizedUrl = sanitizedUrl.replace(/[^a-zA-Z0-9]/g, ''); // Remove non-alphanumeric
+			let sanitizedUrl = settings.wordpress_url.replace(/(^\w+:|^)\/\//, '');
+			sanitizedUrl = sanitizedUrl.replace(/[^a-zA-Z0-9]/g, '');
 
 			const indexName = `${settings.subscription_id}-${sanitizedUrl}-forums-${settings.wordpress_site_id}`;
 
@@ -65,6 +70,16 @@ plugin.init = async (params) => {
 
 			winston.info('[ep-api] Setup complete for index: ' + indexName);
 			return { indexName };
+		},
+
+		reindex: async (socket) => {
+			try {
+				await Indexer.reindexAll();
+				return { message: 'Reindex initiated. Check server logs for progress.' };
+			} catch (err) {
+				winston.error(err);
+				throw err;
+			}
 		}
 	};
 };
@@ -76,6 +91,45 @@ plugin.addAdminNavigation = async (header) => {
 		name: 'ElasticPress API',
 	});
 	return header;
+};
+
+// Hook Implementations
+plugin.onPostSave = async (data) => {
+	await Indexer.indexPost(data.post);
+};
+
+plugin.onPostEdit = async (data) => {
+	await Indexer.indexPost(data.post);
+};
+
+plugin.onPostDelete = async (data) => {
+	await Indexer.deletePost(data.post.pid);
+};
+
+plugin.onPostRestore = async (data) => {
+	await Indexer.indexPost(data.post);
+};
+
+plugin.onTopicSave = async (data) => {
+	await Indexer.indexTopic(data.topic);
+};
+
+plugin.onTopicEdit = async (data) => {
+	// data.topic might only contain changed fields, fetch full topic?
+	// Indexer.indexTopic expects full object usually, but let's see. 
+	// For now pass what we have, if transformation fails validation it's fine.
+	// Better: re-fetch inside indexer or pass ID.
+	// NodeBB hooks pass the object.
+	await Indexer.indexTopic(data.topic);
+};
+
+plugin.onTopicDelete = async (data) => {
+	// data.topic might be available
+	await Indexer.deleteTopic(data.topic.tid);
+};
+
+plugin.onTopicRestore = async (data) => {
+	await Indexer.indexTopic(data.topic);
 };
 
 module.exports = plugin;

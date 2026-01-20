@@ -3,10 +3,17 @@
     "name": "ElasticPress API Integration",
     "description": "Integrates ElasticPress.io Elasticsearch service with NodeBB",
     "url": "https://github.com/OneGuidePortal/nodebb-ep-api",
-    "library": "./library.js",
     "hooks": [
         { "hook": "static:app.load", "method": "init" },
-        { "hook": "filter:admin.header.build", "method": "addAdminNavigation" }
+        { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
+        { "hook": "action:post.save", "method": "onPostSave" },
+        { "hook": "action:post.edit", "method": "onPostEdit" },
+        { "hook": "action:post.delete", "method": "onPostDelete" },
+        { "hook": "action:post.restore", "method": "onPostRestore" },
+        { "hook": "action:topic.save", "method": "onTopicSave" },
+        { "hook": "action:topic.delete", "method": "onTopicDelete" },
+        { "hook": "action:topic.restore", "method": "onTopicRestore" },
+        { "hook": "action:topic.edit", "method": "onTopicEdit" }
     ],
     "staticDirs": {
         "static": "./public"

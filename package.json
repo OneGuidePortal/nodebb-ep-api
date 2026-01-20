@@ -22,7 +22,7 @@
     "compatibility": "^4.0.0"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.17.0",
+    "@elastic/elasticsearch": "^7.17.14",
     "dotenv": "^16.4.7",
     "yargs": "^17.7.2"
   }
