@@ -39,6 +39,19 @@
 						<button type="button" id="run-reindex" class="btn btn-primary">Reindex All Content</button>
 						<p class="form-text">"Run Setup" will delete and recreate the index. "Reindex All" will push all current topics and posts to the index.</p>
 					</div>
+
+					<hr />
+
+					<h5 class="fw-bold tracking-tight">Index Status</h5>
+					<div id="index-stats" class="mb-3">
+						<p>Loading stats...</p>
+					</div>
+
+					<div class="mb-3">
+						<button type="button" id="refresh-index" class="btn btn-info">Refresh Index</button>
+						<button type="button" id="delete-index" class="btn btn-danger">Delete Index</button>
+						<button type="button" id="download-index" class="btn btn-secondary">Download Index Data</button>
+					</div>
 				</div>
 			</form>
 		</div>

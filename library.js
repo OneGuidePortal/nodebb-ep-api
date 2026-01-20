@@ -80,6 +80,79 @@ plugin.init = async (params) => {
 				winston.error(err);
 				throw err;
 			}
+		},
+
+		getStats: async (socket) => {
+			try {
+				const client = await Indexer.getClient();
+				const indexName = await Indexer.getIndexName();
+				if (!client || !indexName) return { error: 'Not configured' };
+
+				const { body: exists } = await client.indices.exists({ index: indexName });
+				if (!exists) return { error: 'Index does not exist' };
+
+				const { body: stats } = await client.indices.stats({ index: indexName });
+				return {
+					index: indexName,
+					docs: stats.indices[indexName].primaries.docs.count,
+					store: stats.indices[indexName].primaries.store.size_in_bytes,
+				};
+			} catch (err) {
+				winston.error(err);
+				return { error: err.message };
+			}
+		},
+
+		refresh: async (socket) => {
+			try {
+				const client = await Indexer.getClient();
+				const indexName = await Indexer.getIndexName();
+				if (!client || !indexName) return;
+
+				await client.indices.refresh({ index: indexName });
+				return { message: 'Index refreshed' };
+			} catch (err) {
+				winston.error(err);
+				throw err;
+			}
+		},
+
+		delete: async (socket) => {
+			try {
+				const client = await Indexer.getClient();
+				const indexName = await Indexer.getIndexName();
+				if (!client || !indexName) return;
+
+				await client.indices.delete({ index: indexName });
+				return { message: 'Index deleted' };
+			} catch (err) {
+				winston.error(err);
+				throw err;
+			}
+		},
+
+		dump: async (socket) => {
+			try {
+				const client = await Indexer.getClient();
+				const indexName = await Indexer.getIndexName();
+				if (!client || !indexName) return { error: 'Not configured' };
+
+				const { body: response } = await client.search({
+					index: indexName,
+					size: 10000, // Limit to 10k for simple dump
+					body: {
+						query: {
+							match_all: {}
+						}
+					}
+				});
+
+				const documents = response.hits.hits.map(hit => hit._source);
+				return { documents };
+			} catch (err) {
+				winston.error(err);
+				throw err;
+			}
 		}
 	};
 };
