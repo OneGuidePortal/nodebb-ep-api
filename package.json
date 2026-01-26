@@ -1,5 +1,5 @@
 {
-  "name": "@oneguideportal/nodebb-plugin-ep-api",
+  "name": "nodebb-plugin-ep-api",
   "version": "1.0.0",
   "description": "ElasticPress.io integration for NodeBB",
   "main": "library.js",
