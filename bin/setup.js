@@ -8,7 +8,7 @@ const { Client } = require('@elastic/elasticsearch');
 const argv = yargs(hideBin(process.argv)).argv;
 
 async function main() {
-  console.log('=== ElasticPress.io Nobel Prize Sample - Setup ===');
+  console.log('=== ElasticPress.io Setup ===');
 
   try {
     // 1. Load configuration

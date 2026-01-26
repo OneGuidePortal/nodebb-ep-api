@@ -1,8 +1,11 @@
 {
-  "name": "nodebb-plugin-ep-api",
+  "name": "@oneguideportal/nodebb-plugin-ep-api",
   "version": "1.0.0",
   "description": "ElasticPress.io integration for NodeBB",
   "main": "library.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

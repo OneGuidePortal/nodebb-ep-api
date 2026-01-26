@@ -4,7 +4,7 @@ const meta = require.main.require('./src/meta');
 const socketAdmin = require.main.require('./src/socket.io/admin');
 const winston = require.main.require('winston');
 const { Client } = require('@elastic/elasticsearch');
-const { getSettings, getMapping } = require('./src/Mapping/NobelPrizeMapping.js');
+const { getSettings, getMapping } = require('./src/Mapping/Mapping.js');
 const Indexer = require('./src/Indexer');
 
 const plugin = {};
