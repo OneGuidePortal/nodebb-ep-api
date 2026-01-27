@@ -4,7 +4,7 @@
  * Defines the Elasticsearch mapping for data.
  *
  * This mapping defines field types and properties for indexing
- * laureates with support for faceted search by category, year, gender, and countries.
+ * with support for faceted search by category, year, gender, and countries.
  *
  * Field types used:
  * - text: Full-text searchable fields (name, motivation)

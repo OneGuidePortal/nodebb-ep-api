@@ -57,7 +57,7 @@ async function main() {
     }
     
     // Create index with mappings
-    const { getSettings, getMapping } = require('../src/Mapping/NobelPrizeMapping.js');
+    const { getSettings, getMapping } = require('../src/Mapping/Mapping.js');
 
     await client.indices.create({
       index: indexName,

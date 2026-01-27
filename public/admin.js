@@ -15,7 +15,7 @@ define(['settings', 'alerts', 'bootbox'], function (settings, alerts, bootbox) {
 		$('#run-setup').on('click', function () {
 			bootbox.confirm({
 				title: 'Run Setup',
-				message: 'Are you sure you want to delete and recreate the index? All data in the laureates index will be lost.',
+				message: 'Are you sure you want to delete and recreate the index? All data in the index will be lost.',
 				callback: function (result) {
 					if (result) {
 						socket.emit('admin.plugins.epApi.setup', {}, function (err, data) {
