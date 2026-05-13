@@ -2,12 +2,21 @@
 
 const meta = require.main.require('./src/meta');
 const socketAdmin = require.main.require('./src/socket.io/admin');
+const routeHelpers = require.main.require('./src/routes/helpers');
 const winston = require.main.require('winston');
 const { Client } = require('@elastic/elasticsearch');
 const { getSettings, getMapping } = require('./src/Mapping/Mapping.js');
 const Indexer = require('./src/Indexer');
 
 const plugin = {};
+
+function scheduleFullReindexInBackground() {
+	setImmediate(() => {
+		Indexer.reindexAll().catch((err) => {
+			winston.error('[ep-api] Full reindex failed', err);
+		});
+	});
+}
 
 plugin.init = async (params) => {
 	const { router, middleware, controllers } = params;
@@ -155,6 +164,23 @@ plugin.init = async (params) => {
 			}
 		}
 	};
+};
+
+plugin.addApiRoutes = async ({ router, middleware, helpers }) => {
+	const adminOnly = [middleware.admin.checkPrivileges];
+
+	routeHelpers.setupApiRoute(
+		router,
+		'post',
+		'/ep-api/reindex',
+		adminOnly,
+		async (req, res) => {
+			await helpers.formatApiResponse(202, res, {
+				message: 'Full reindex started. Progress is logged on the NodeBB server.',
+			});
+			scheduleFullReindexInBackground();
+		}
+	);
 };
 
 plugin.addAdminNavigation = async (header) => {

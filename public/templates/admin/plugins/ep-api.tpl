@@ -38,6 +38,7 @@
 						<button type="button" id="run-setup" class="btn btn-warning">Run Setup (Create Index)</button>
 						<button type="button" id="run-reindex" class="btn btn-primary">Reindex All Content</button>
 						<p class="form-text">"Run Setup" will delete and recreate the index. "Reindex All" will push all current topics and posts to the index.</p>
+						<p class="form-text">You can also trigger a full reindex via HTTP (for example a daily cron): <code>POST /api/v3/plugins/ep-api/reindex</code> with a <a href="https://docs.nodebb.org/API/master/admin/settings/api/" rel="noopener noreferrer" target="_blank">Master API token</a>, <code>_uid</code> set to a global administrator UID, and your forum <code>relative_path</code> prefix if applicable. The response is <code>202 Accepted</code> while indexing continues in the background. Avoid overlapping runs.</p>
 					</div>
 
 					<hr />

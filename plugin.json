@@ -5,6 +5,7 @@
     "url": "https://github.com/OneGuidePortal/nodebb-ep-api",
     "hooks": [
         { "hook": "static:app.load", "method": "init" },
+        { "hook": "static:api.routes", "method": "addApiRoutes" },
         { "hook": "filter:admin.header.build", "method": "addAdminNavigation" },
         { "hook": "action:post.save", "method": "onPostSave" },
         { "hook": "action:post.edit", "method": "onPostEdit" },
