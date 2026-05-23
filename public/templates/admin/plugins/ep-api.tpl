@@ -1,0 +1,62 @@
+<div class="acp-page-container">
+	<!-- IMPORT admin/partials/settings/header.tpl -->
+
+	<div class="row m-0">
+		<div id="spy-container" class="col-12 col-md-8 px-0 mb-4" tabindex="0">
+			<form role="form" class="ep-api-settings">
+				<div class="mb-4">
+					<h5 class="fw-bold tracking-tight settings-header">ElasticPress Configuration</h5>
+
+					<div class="mb-3">
+						<label class="form-label" for="host">ElasticPress Host</label>
+						<input type="text" id="host" name="host" title="ElasticPress Host" class="form-control" placeholder="https://..." />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label" for="subscription_id">Subscription ID</label>
+						<input type="text" id="subscription_id" name="subscription_id" title="Subscription ID" class="form-control" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label" for="subscription_token">Subscription Token</label>
+						<input type="password" id="subscription_token" name="subscription_token" title="Subscription Token" class="form-control" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label" for="wordpress_url">WordPress URL</label>
+						<input type="text" id="wordpress_url" name="wordpress_url" title="WordPress URL" class="form-control" placeholder="example.com" />
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label" for="wordpress_site_id">WordPress Site ID</label>
+						<input type="number" id="wordpress_site_id" name="wordpress_site_id" title="WordPress Site ID" class="form-control" placeholder="1" />
+					</div>
+
+					<hr />
+
+					<div class="mb-3">
+						<button type="button" id="run-setup" class="btn btn-warning">Run Setup (Create Index)</button>
+						<button type="button" id="run-reindex" class="btn btn-primary">Reindex All Content</button>
+						<p class="form-text">"Run Setup" will delete and recreate the index. "Reindex All" will push all current topics and posts to the index.</p>
+						<p class="form-text">You can also trigger a full reindex via HTTP (for example a daily cron): <code>POST /api/v3/plugins/ep-api/reindex</code> with a <a href="https://docs.nodebb.org/API/master/admin/settings/api/" rel="noopener noreferrer" target="_blank">Master API token</a>, <code>_uid</code> set to a global administrator UID, and your forum <code>relative_path</code> prefix if applicable. The response is <code>202 Accepted</code> while indexing continues in the background. Avoid overlapping runs.</p>
+					</div>
+
+					<hr />
+
+					<h5 class="fw-bold tracking-tight">Index Status</h5>
+					<div id="index-stats" class="mb-3">
+						<p>Loading stats...</p>
+					</div>
+
+					<div class="mb-3">
+						<button type="button" id="refresh-index" class="btn btn-info">Refresh Index</button>
+						<button type="button" id="delete-index" class="btn btn-danger">Delete Index</button>
+						<button type="button" id="download-index" class="btn btn-secondary">Download Index Data</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- IMPORT admin/partials/settings/toc.tpl -->
+	</div>
+</div>

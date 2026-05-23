@@ -1,4 +1,31 @@
-# ElasticPress.io Sample Project
+# nodebb-plugin-ep-api (NodeBB)
+
+NodeBB plugin that indexes topics and posts into [ElasticPress.io](https://elasticpress.io) (Elasticsearch) for WordPress search integration. Configure the connection in **ACP → Plugins → ElasticPress API** after installation.
+
+## Scheduled full reindex (cron)
+
+The same work as **Reindex All Content** in the admin UI can be triggered over the [Write API v3](https://docs.nodebb.org/api):
+
+- **Path:** `POST {relative_path}/api/v3/plugins/ep-api/reindex`
+- **Auth:** Bearer **Master API token** (ACP → Settings → API Access). Master tokens require **`_uid`** — use query string or JSON body with the UID of a **global administrator or global moderator** (same privilege level as ACP).
+- **Response:** `202 Accepted` with a JSON body; indexing runs in the background. Watch NodeBB logs for `[ep-api]` lines.
+
+Do **not** run multiple overlapping full reindexes; wait for one job to finish before starting another.
+
+```bash
+curl -sS -X POST \
+  'https://YOUR_NODEBB_ORIGIN/PREFIX/api/v3/plugins/ep-api/reindex?_uid=1' \
+  -H "Authorization: Bearer YOUR_MASTER_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+Replace `YOUR_NODEBB_ORIGIN` with your site origin, `PREFIX` with your forum [`relative_path`](https://docs.nodebb.org/configuring/nodebb/config/#url) (often empty, so you can omit `/PREFIX`), and `1` with an admin UID.
+
+---
+
+## Legacy: ElasticPress.io PHP sample (Nobel Prize)
+
+The remainder of this file describes the upstream PHP Nobel Prize sample still present in this repository for reference. The **NodeBB** integration is implemented in `library.js`, `src/Indexer.js`, and related files.
 
 A comprehensive example demonstrating how to integrate with the managed Elasticsearch service [ElasticPress.io](https://elasticpress.io) outside of WordPress using the Nobel Prize dataset.
 

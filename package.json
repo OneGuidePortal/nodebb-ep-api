@@ -1,0 +1,29 @@
+{
+  "name": "nodebb-plugin-ep-api",
+  "version": "1.0.0",
+  "description": "ElasticPress.io integration for NodeBB",
+  "main": "library.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OneGuidePortal/nodebb-ep-api.git"
+  },
+  "keywords": [
+    "nodebb",
+    "plugin",
+    "elasticsearch",
+    "elasticpress"
+  ],
+  "author": "",
+  "license": "ISC",
+  "nbbpm": {
+    "compatibility": "^4.0.0"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.17.14",
+    "dotenv": "^16.4.7",
+    "yargs": "^17.7.2"
+  }
+}
